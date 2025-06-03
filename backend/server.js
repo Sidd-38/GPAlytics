@@ -3,10 +3,18 @@ const cors = require('cors');
 const { MongoClient } = require('mongodb');
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
+// Add this at the top of your file
 require('dotenv').config();
 
 const app = express();
+// Replace the hardcoded MongoDB URI with
+const uri = process.env.MONGODB_URI;
+
+// Update your server listen call
 const PORT = process.env.PORT || 5000;
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on port ${PORT}`);
+});
 
 // CORS configuration
 app.use(cors({
@@ -18,7 +26,6 @@ app.use(cors({
 app.use(express.json());
 
 // MongoDB connection
-const uri = "mongodb+srv://siddharthanandh618:mongodb38@cluster0.dstn34f.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const client = new MongoClient(uri, {
   connectTimeoutMS: 5000,
   socketTimeoutMS: 45000,
